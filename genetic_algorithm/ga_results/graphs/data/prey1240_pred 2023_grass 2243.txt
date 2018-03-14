@@ -1,0 +1,1 @@
+prey: 1240, pred:  2023, grass:  2243, prey_reproduction:  0.14528298480274804, pred_reproduction:  0.01387243795104473, pred_energy:  54, prey_energy:  84, grass_regrow:  64

@@ -1,0 +1,45 @@
+﻿  Generating Dynamic Code from FLAMEGPU Templates
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\header.xslt" ".\src\dynamic\\header.h"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\header.xslt, Output File -> .\src\dynamic\\header.h : Success...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\FLAMEGPU_kernals.xslt" ".\src\dynamic\\FLAMEGPU_kernals.cu"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\FLAMEGPU_kernals.xslt, Output File -> .\src\dynamic\\FLAMEGPU_kernals.cu : Success...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\io.xslt" ".\src\dynamic\\io.cu"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\io.xslt, Output File -> .\src\dynamic\\io.cu : Success...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\simulation.xslt" ".\src\dynamic\\simulation.cu"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\simulation.xslt, Output File -> .\src\dynamic\\simulation.cu : Success...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\main.xslt" ".\src\dynamic\\main.cu"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\main.xslt, Output File -> .\src\dynamic\\main.cu : Success...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"..\..\tools\XSLTProcessor" "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml" "..\..\FLAMEGPU\templates\\visualisation.xslt" ".\src\dynamic\\visualisation.cu"  
+  XSLT Transformation: XML File -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\model\XMLModelFile.xml, XSLT File -> ..\..\FLAMEGPU\templates\\visualisation.xslt, Output File -> .\src\dynamic\\visualisation.cu : Success...
+  Compiling CUDA source file src\dynamic\io.cu...
+  Compiling CUDA source file src\dynamic\main.cu...
+  Compiling CUDA source file src\dynamic\simulation.cu...
+  Compiling CUDA source file src\dynamic\visualisation.cu...
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_35,code=\"sm_35,compute_35\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release_Visualisation -maxrregcount=0  --machine 64 --compile -cudart static     -DWIN32 -DWIN32 -DWIN64 -DVISUALISATION -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MT " -o x64\Release_Visualisation\io.cu.obj "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\dynamic\io.cu" 
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_35,code=\"sm_35,compute_35\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release_Visualisation -maxrregcount=0  --machine 64 --compile -cudart static     -DWIN32 -DWIN32 -DWIN64 -DVISUALISATION -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MT " -o x64\Release_Visualisation\simulation.cu.obj "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\dynamic\simulation.cu" 
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_35,code=\"sm_35,compute_35\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release_Visualisation -maxrregcount=0  --machine 64 --compile -cudart static     -DWIN32 -DWIN32 -DWIN64 -DVISUALISATION -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MT " -o x64\Release_Visualisation\visualisation.cu.obj "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\dynamic\visualisation.cu" 
+  
+  D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\nvcc.exe" -gencode=arch=compute_35,code=\"sm_35,compute_35\" --use-local-env --cl-version 2015 -ccbin "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64"  -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include" -I..\..\include -I.\src -I.\src\model -I.\src\dynamic -I.\src\visualisation -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\include"     --keep-dir x64\Release_Visualisation -maxrregcount=0  --machine 64 --compile -cudart static     -DWIN32 -DWIN32 -DWIN64 -DVISUALISATION -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS /Zi  /MT " -o x64\Release_Visualisation\main.cu.obj "D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\src\dynamic\main.cu" 
+  io.cu
+  visualisation.cu
+  main.cu
+  Note: including lib: glut32.lib
+  
+  Note: including lib: glut32.lib
+  
+  simulation.cu
+  LINK : /LTCG specified but no code generation required; remove /LTCG from the link command line to improve linker performance
+  PreyPredator.vcxproj -> D:\Documents\predprey_backup\PreyPredator\examples\PreyPredator\..\..\bin\x64\Release_Visualisation\PreyPredator.exe
+  copy "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart*.dll" "..\..\bin\x64\Release_Visualisation\"
+  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart32_80.dll
+  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin\cudart64_80.dll
+          2 file(s) copied.
