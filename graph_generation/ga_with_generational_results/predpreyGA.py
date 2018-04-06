@@ -19,10 +19,8 @@ import sys
 import threading
 import pycuda.driver as cuda
 import pycuda.autoinit
-#from pycuda.compiler import SourceModule
 import argparse
 import datetime
-import matplotlib.pyplot as plt
 
 global toolbox
 global hof
@@ -58,7 +56,7 @@ MAX_ALTERATION = 0.25
 NEW_OFFSPRING = 0.5
 
 #Set random seed
-seed = 2041057997383656593#random.randrange(sys.maxsize)
+seed = random.randrange(sys.maxsize)
 random.seed(seed)
 
 #GA Parameters
@@ -69,7 +67,7 @@ MU = NUM_POPULATIONS
 #else:
 LAMBDA = args.lamb[0]
 GATYPE = str(MU)+"+"+str(LAMBDA)
-crossover = True#args.crossover[0]
+crossover = True
 maxevals = args.GAevals[0]
 
 SAVEPATH = "ga_results/"
@@ -280,7 +278,6 @@ def pp1():
     curr_pop = 0
     #Initialise creator variables
     creator.create("Fitness", base.Fitness, weights=(1.0, -1.0, 1.0,))
-    #creator.create("Fitness", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.Fitness)
     toolbox = base.Toolbox()
     #Initialise toolbox variables
@@ -344,7 +341,7 @@ def predprey():
     log(logbook, population, gen, len(population))
     
     #Start generational process
-    while(cont==1):
+    while(cont==1):#and eval_count<maxevals):
         gen += 1
         nevals = 0
         ga_file = open(str(MU)+"+"+str(LAMBDA)+"_ga_generations.csv","a")

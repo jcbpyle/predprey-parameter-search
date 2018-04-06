@@ -19,10 +19,8 @@ import sys
 import threading
 import pycuda.driver as cuda
 import pycuda.autoinit
-#from pycuda.compiler import SourceModule
 import argparse
 import datetime
-import matplotlib.pyplot as plt
 
 global toolbox
 global hof
@@ -55,7 +53,7 @@ STAT_RUNS = args.stats[0]
 #Editable parameters for simulation variables and GA mutation
 MAX_POP = args.maxpopsize[0]
 MAX_ALTERATION = 0.25
-NEW_OFFSPRING = 0.05
+NEW_OFFSPRING = 0.5
 
 #Set random seed
 seed = random.randrange(sys.maxsize)
@@ -69,7 +67,7 @@ MU = NUM_POPULATIONS
 #else:
 LAMBDA = args.lamb[0]
 GATYPE = str(MU)+"+"+str(LAMBDA)
-crossover = True#args.crossover[0]
+crossover = True
 maxevals = args.GAevals[0]
 
 SAVEPATH = "ga_results/"
@@ -123,7 +121,7 @@ def fitnessValue(individual):
     return individual.fitness.values[0]
 
 def bestFitness(population):
-    return fitnessValue(tools.selBest(population, 1)[0])
+    return tools.selBest(population, 1)[0]
 
 def favourOffspring(parents, offspring, MU):
     choice = (list(zip(parents, [0]*len(parents))) +
@@ -192,11 +190,11 @@ def evalAuxillary(d, x, runs):
     for r in range(runs):
         open(SAVEPATH+str(d)+"/simulation_results.csv","w").close()
         if os.name=='nt':
-            genComm = "xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
-            command = "PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
+            genComm = PATH_TO_CURR+"../xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
+            command = PATH_TO_CURR+"../PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
         else:
-            genComm = "./xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
-            command = "./PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
+            genComm = "../xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
+            command = "../PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
         os.system(genComm)
         os.system(command)
         
@@ -280,7 +278,6 @@ def pp1():
     curr_pop = 0
     #Initialise creator variables
     creator.create("Fitness", base.Fitness, weights=(1.0, -1.0, 1.0,))
-    #creator.create("Fitness", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.Fitness)
     toolbox = base.Toolbox()
     #Initialise toolbox variables
@@ -315,25 +312,40 @@ def predprey():
     global crossover
     global maxevals
     global start_time
+    global ga_file
     logbook = tools.Logbook()
     logbook.header = ['gen', 'nevals'] + (s1.fields+s2.fields+s3.fields if s1 and s2 and s3 else [])
     print("Running for: ",maxevals," evaluations")
-
+    ga_file = open(str(MU)+"+"+str(LAMBDA)+"_ga_generations.csv","w")
+    ga_file.write("Generation,0,mu,"+str(MU)+",lambda,"+str(LAMBDA)+",seed,"+str(seed)+"\n")
+    cont = 1
     #Initialise individuals fitness
     population = toolbox.population(n=MU)
     eval_count = len(population)
     print("Evaluating initial population")
     for ind in population:
         ind.fitness.values = toolbox.evaluate(ind)
+#        if ind.fitness.values[2]>0.75:
+#            cont = 0
+    b = bestFitness(population)
+    ga_file.write("parameters,")
+    for i in b:
+        ga_file.write(str(i)+",")
+    ga_file.write("fitnesses,")
+    for f in b.fitness.values:
+        ga_file.write(str(f)+",")
+    ga_file.write("\n")
+    ga_file.close()
     print("Starting GA") 
     gen = 0
     log(logbook, population, gen, len(population))
     
     #Start generational process
-    while(eval_count < maxevals):
+    while(cont==1):#and eval_count<maxevals):
         gen += 1
         nevals = 0
-
+        ga_file = open(str(MU)+"+"+str(LAMBDA)+"_ga_generations.csv","a")
+        ga_file.write("Generation,"+str(gen)+"\n")
         #Generate offspring
         offspring = []
 
@@ -359,12 +371,23 @@ def predprey():
         # Select the next generation, favouring the offspring in the event of equal fitness values
         population = favourOffspring(population, offspring, MU)
         #Print a report about the current generation
-        print("evals done: ",eval_count," out of ",maxevals)
+        print("evals performed: ",eval_count," out of ",maxevals)
         if nevals > 0:
             log(logbook, population, gen, nevals)
             #Save to file in case of early exit
         end_time = datetime.datetime.now()
         time_taken = end_time-start_time
+        b = bestFitness(population)
+        ga_file.write("parameters,")
+        if b.fitness.values[0]>60 and b.fitness.values[2]>0.95:
+            cont = 0
+        for i in b:
+            ga_file.write(str(i)+",")
+        ga_file.write("fitnesses,")
+        for f in b.fitness.values:
+            ga_file.write(str(f)+",")
+        ga_file.write("\n")
+        ga_file.close()
         f = open(SAVEPATH+"results.txt","w")
         f.write("Random seed: "+str(seed)+"\n")
         f.write("Start time: "+str(start_time)+"\n")
@@ -378,7 +401,10 @@ def predprey():
     
 #Run and print
 population, logbook = pp1()
-print(population)
+print("Final population")
+for p in population:
+    print("Params",p,"Fitness",p.fitness.values)
+print("Logbook")
 print(logbook)
 f = open(SAVEPATH+"results.txt","r")
 r = f.readlines()

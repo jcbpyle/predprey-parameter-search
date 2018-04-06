@@ -148,62 +148,6 @@ def evalPP(x):
     popratio = popratio/STAT_RUNS
     nonzero = nonzero/STAT_RUNS
     return changeover,popratio,nonzero,
-
-#def evalAuxillary(d, x, runs):
-#    global changeover
-#    global popratio
-#    global nonzero
-#    if not os.path.exists(SAVEPATH+str(d)):
-#        os.makedirs(SAVEPATH+str(d))
-#    if not os.path.exists(SAVEPATH+str(d)+"/0.xml"):
-#        open(SAVEPATH+str(d)+"/0.xml", "w").close()
-#    for r in range(runs):
-#        if os.name=='nt':
-#            genComm = "xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
-#            command = "PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
-#        else:
-#            genComm = "./xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
-#            command = "./PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
-#        os.system(genComm)
-#        os.system(command)
-#        
-#        #csv file data
-#        csv = open(SAVEPATH+str(d)+"/PreyPred_Count.csv","r")
-#        line = 0
-#        lastgen = ""
-#        #Check data at specific generations for calculations
-#        #Measure the change in which of the populations is currently larger
-#        currPrey = 0
-#        currPred = 0
-#        current_high = 0 
-#        for li in csv:
-#            pry = int(li.split(',')[1])
-#            currPrey+=pry
-#            prd = int(li.split(',')[3])
-#            currPred+=prd
-#            if line==0:
-#                if pry>=prd:
-#                    current_high = 1
-#                else:
-#                    current_high = 2
-#            else:
-#                if ((pry>=prd and current_high==2) and ((not pry==0) and (not prd==0))):
-#                    current_high=1
-#                    changeover[d]+=1.0
-#                if ((prd>pry and current_high==1) and ((not pry==0) and (not prd==0))):
-#                    current_high==2
-#                    changeover[d]+=1.0
-#            popratio[d] += abs(currPrey-currPred)
-#            if line==GENERATIONS-1:
-#                lastgen = li
-#            line+=1
-#        
-#        #Measure the populations at the last generation to check for non zero
-#        lg = lastgen.split(",")
-#        lastprey = int(lg[1])
-#        lastpred = int(lg[3])
-#        if lastprey>0 and lastpred>0:
-#            nonzero[d] += 1
             
 def evalAuxillary(d, x, runs):
     global changeover
@@ -218,11 +162,11 @@ def evalAuxillary(d, x, runs):
     for r in range(runs):
         open(SAVEPATH+str(d)+"/simulation_results.csv","w").close()
         if os.name=='nt':
-            genComm = "xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
-            command = "PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
+            genComm = PATH_TO_CURR+"../xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
+            command = PATH_TO_CURR+"../PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
         else:
-            genComm = "./xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
-            command = "./PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
+            genComm = "../xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
+            command = "../PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
         os.system(genComm)
         os.system(command)
         
@@ -296,7 +240,6 @@ def mate(c,p1,p2):
 #--------------------PERFORM GA Functions----------------#
 #Run the GA and set up all deap variables necessary
 def pp1():
-    #pry, prd, g, pyr, pdr, pye, pde, gr = readPP()
     global curr_pop 
     global toolbox
     global s1,s2,s3
@@ -306,7 +249,6 @@ def pp1():
     curr_pop = 0
     #Initialise creator variables
     creator.create("Fitness", base.Fitness, weights=(1.0, -1.0, 1.0,))
-    #creator.create("Fitness", base.Fitness, weights=(1.0,))
     creator.create("Individual", list, fitness=creator.Fitness)
     toolbox = base.Toolbox()
     #Initialise toolbox variables

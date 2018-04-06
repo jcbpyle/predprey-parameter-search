@@ -6,10 +6,9 @@ Created on Mon Dec 18 15:51:40 2017
 """
 import sys
 from sklearn.model_selection import train_test_split, learning_curve
-from sklearn.preprocessing import StandardScaler, MaxAbsScaler
+from sklearn.preprocessing import StandardScaler, MaxAbsScaler, MinMaxScaler, RobustScaler, QuantileTransformer, Normalizer
 from sklearn.neural_network import MLPRegressor,MLPClassifier
-from sklearn.metrics import mean_squared_error, explained_variance_score, mean_absolute_error, confusion_matrix, classification_report
-#import neural_network
+from sklearn.metrics import mean_squared_error, explained_variance_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import random
 import os
@@ -128,9 +127,6 @@ def train_multiple(trainX,trainY,testX,testY,it,ts):
 def sklearn_regressor(X,Y,trainX,trainY,testX,testY,it):
     mlp = MLPRegressor(max_iter=it, verbose=False, tol=0.000000001)
     train_sizes, train_scores, valid_scores = learning_curve(mlp, X, Y, train_sizes=[0.95], cv=5)
-#    print(train_sizes)
-#    print(train_scores)
-#    print(valid_scores)
     mlp.fit(trainX,trainY)
     predictions = mlp.predict(testX)
     print("MAE: ",mean_absolute_error(testY,predictions))
@@ -153,8 +149,8 @@ def sklearn_regressor(X,Y,trainX,trainY,testX,testY,it):
     plt.plot(train_scores[0], label="Training score")
     plt.plot(valid_scores[0], label="Validation score")
     plt.legend(frameon=True, fontsize=14, loc=1)
-    plt.savefig("test_sknn.png", bbox_inches='tight')
-    plt.savefig("test_sknn.pdf", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/test_sknn.png", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/test_sknn.pdf", bbox_inches='tight')
     return
 
 def sklearn_multiple(X,c,p,n,trainX,trainY,testX,testY,it):
@@ -174,8 +170,8 @@ def sklearn_multiple(X,c,p,n,trainX,trainY,testX,testY,it):
     plt.plot(train_scores0[0], label="Training score")
     plt.plot(valid_scores0[0], label="Validation score")
     plt.legend(frameon=True, fontsize=14, loc=3)
-    plt.savefig("sknn_fitness1.png", bbox_inches='tight')
-    plt.savefig("sknn_fitness1.pdf", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness1.png", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness1.pdf", bbox_inches='tight')
     sklm_aux(X,it,p,n)
     return
 
@@ -196,8 +192,8 @@ def sklm_aux(X,it,p,n):
     plt.plot(train_scores1[0], label="Training score")
     plt.plot(valid_scores1[0], label="Validation score")
     plt.legend(frameon=True, fontsize=14, loc=3)
-    plt.savefig("sknn_fitness2.png", bbox_inches='tight')
-    plt.savefig("sknn_fitness2.pdf", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness2.png", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness2.pdf", bbox_inches='tight')
     sklm_aux2(X,it,n)
     return
 
@@ -218,17 +214,8 @@ def sklm_aux2(X,it,n):
     plt.plot(train_scores2[0], label="Training score")
     plt.plot(valid_scores2[0], label="Validation score")
     plt.legend(frameon=True, fontsize=14, loc=3)
-    plt.savefig("sknn_fitness3.png", bbox_inches='tight')
-    plt.savefig("sknn_fitness3.pdf", bbox_inches='tight')
-#    predictions0 = mlp0.predict(testX)
-#    print(confusion_matrix(testY[0],predictions0))
-#    print(classification_report(testY[0],predictions0))
-#    predictions1 = mlp1.predict(testX)
-#    print(confusion_matrix(testY[1],predictions1))
-#    print(classification_report(testY[1],predictions1))
-#    predictions2 = mlp2.predict(testX)
-#    print(confusion_matrix(testY[2],predictions2))
-#    print(classification_report(testY[2],predictions2))
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness3.png", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs/sknn_fitness3.pdf", bbox_inches='tight')
     return
 
 def generate_graphs():
@@ -241,8 +228,6 @@ def generate_graphs():
     plt.xlabel("Test data size", fontsize=18)
     plt.ylabel("Neural network score", fontsize=16)
     plt.yticks(fontsize=12)
-    #plt.xlim(0, 10)
-    #plt.ylim(0, 10000)
     plt.xticks(fontsize=12)
     plt.plot([s[0] for s in single], [s[1] for s in single], 'b-', label="All 3 fitnesses")
     plt.plot([m[0] for m in multi], [m[1] for m in multi], 'r-', label="Fitness 1")
@@ -250,8 +235,8 @@ def generate_graphs():
     plt.plot([m[0] for m in multi], [m[3] for m in multi], 'c-', label="Fitness 3")
     plt.legend(frameon=True, fontsize=18, loc=3)
     plt.tight_layout()
-    plt.savefig(os.getcwd()+"/neural_network_scores.png", bbox_inches='tight')
-    plt.savefig(os.getcwd()+"/neural_network_scores.pdf", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs//neural_network_scores.png", bbox_inches='tight')
+    plt.savefig(os.getcwd()+"/graphs//neural_network_scores.pdf", bbox_inches='tight')
     return
 
 generate_graphs()
