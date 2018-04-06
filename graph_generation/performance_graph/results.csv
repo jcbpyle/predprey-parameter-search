@@ -1,0 +1,5 @@
+num_parameters,10000
+gpus,1,time,18386.477405
+gpus,2,time,9346.095061
+gpus,3,time,6337.651963
+gpus,4,time,4999.11616
