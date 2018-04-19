@@ -162,11 +162,11 @@ def evalAuxillary(d, x, runs):
     for r in range(runs):
         open(SAVEPATH+str(d)+"/simulation_results.csv","w").close()
         if os.name=='nt':
-            genComm = PATH_TO_CURR+"../xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
-            command = PATH_TO_CURR+"../PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
+            genComm = PATH_TO_CURR+"/xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
+            command = PATH_TO_CURR+"/PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
         else:
-            genComm = "../xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
-            command = "../PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
+            genComm = "./xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
+            command = "./PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)
         os.system(genComm)
         os.system(command)
         

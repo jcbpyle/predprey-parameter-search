@@ -190,11 +190,11 @@ def evalAuxillary(d, x, runs):
     for r in range(runs):
         open(SAVEPATH+str(d)+"/simulation_results.csv","w").close()
         if os.name=='nt':
-            genComm = PATH_TO_CURR+"../xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
-            command = PATH_TO_CURR+"../PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
+            genComm = PATH_TO_CURR+"/xmlGenEx3.exe "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])
+            command = PATH_TO_CURR+"/PreyPredator.exe "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
         else:
-            genComm = "../xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
-            command = "../PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
+            genComm = "./xmlGenEx3 "+SAVEPATH+str(d)+"/0.xml "+str(x[0])+" "+str(x[1])+" "+str(x[2])+" "+str(x[3])+" "+str(x[4])+" "+str(x[5])+" "+str(x[6])+" "+str(x[7])        
+            command = "./PreyPredator_console "+SAVEPATH+str(d)+"/0.xml "+str(GENERATIONS)+" "+str(d)
         os.system(genComm)
         os.system(command)
         
@@ -341,7 +341,7 @@ def predprey():
     log(logbook, population, gen, len(population))
     
     #Start generational process
-    while(cont==1):#and eval_count<maxevals):
+    while(cont==1 and eval_count<maxevals):
         gen += 1
         nevals = 0
         ga_file = open(str(MU)+"+"+str(LAMBDA)+"_ga_generations.csv","a")

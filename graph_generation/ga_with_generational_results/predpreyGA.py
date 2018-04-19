@@ -341,7 +341,7 @@ def predprey():
     log(logbook, population, gen, len(population))
     
     #Start generational process
-    while(cont==1):#and eval_count<maxevals):
+    while(cont==1 and eval_count<maxevals):
         gen += 1
         nevals = 0
         ga_file = open(str(MU)+"+"+str(LAMBDA)+"_ga_generations.csv","a")
